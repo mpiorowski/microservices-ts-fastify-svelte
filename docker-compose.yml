@@ -1,0 +1,63 @@
+version: "3"
+services:
+
+  api-gateway:
+    build: 
+      context: "."
+      dockerfile: "./api-gateway/Dockerfile"
+    depends_on:
+      - chat-service
+      - users-service
+    ports: 
+      - "7000:7000"
+    volumes:
+      - ./api-gateway:/opt/app
+
+  chat-service:
+    build: 
+      context: "."
+      dockerfile: "./chat-service/Dockerfile"
+    depends_on:
+      - chat-service-db
+    ports: 
+      - "7001:7000"
+    volumes:
+      - ./chat-service:/opt/app
+    command: sh -c "yarn && yarn watch"
+
+  chat-service-db: 
+    image: postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: chat-service
+      PGDATA: /data/pgdata
+    volumes:
+      - ./db/chat-service:/data/pgdata
+    ports:
+      - "5433:5432"
+
+  users-service:
+    build: 
+      context: "."
+      dockerfile: "./users-service/Dockerfile"
+    depends_on:
+      - users-service-db
+    ports: 
+      - 7002:7000
+    volumes:
+      - ./users-service:/opt/app
+    command: sh -c "yarn && yarn watch"
+    
+
+  users-service-db: 
+    image: postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: users-service
+      PGDATA: /data/pgdata
+    volumes:
+      - ./db/users-service:/data/pgdata
+    ports:
+      - "5434:5432"
