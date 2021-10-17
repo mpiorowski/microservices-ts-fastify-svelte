@@ -3,11 +3,24 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "watch": "ts-node-dev --respawn index.dev.ts"
+    "watch": "nodemon src/server.ts"
   },
   "dependencies": {
-    "module-alias": "^2.2.2",
-    "ts-node-dev": "^1.1.8",
-    "typescript": "^4.4.3"
+    "@types/node": "^16.11.1",
+    "apollo-server-core": "^3.4.0",
+    "apollo-server-fastify": "^3.4.0",
+    "dotenv": "^10.0.0",
+    "fastify": "^3.22.0",
+    "fastify-cookie": "^5.3.1",
+    "fastify-cors": "^6.0.2",
+    "got": "^11.8.2",
+    "graphql": "^15.6.1",
+    "mercurius": "^8.6.0",
+    "nodemon": "^2.0.13",
+    "ts-node": "^10.3.0",
+    "typescript": "^4.4.4"
+  },
+  "devDependencies": {
+    "ts-node-dev": "^1.1.8"
   }
 }

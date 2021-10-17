@@ -4,38 +4,46 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import userSessionsRoutes from "./user-sessions";
 import usersRoutes from "./users";
 
+require("dotenv").config();
 export const CONFIG = {
   PORT: process.env["PORT"],
 };
 
 // fastify setup
-const server = require("fastify")({ logger: true });
-server.register(require("fastify-cors"), {
+const app = require("fastify")({ logger: true });
+app.register(require("fastify-cors"), {
   credentials: true,
 });
 
+// app.addHook(
+//   "onSend",
+//   function (_req: FastifyRequest, _reply: FastifyReply, payload: any) {
+//     app.log.info({ body: payload }, "parsed body");
+//   }
+// );
+
 // error handler
-server.setErrorHandler(function (
+app.setErrorHandler(function (
   error: unknown,
   _request: FastifyRequest,
   reply: FastifyReply
 ) {
   // Log error
-  server.log.error(error);
+  app.log.error(error);
   // Send error response
   reply.status(409).send(error);
 });
 
 // Declare routes
-usersRoutes(server);
-userSessionsRoutes(server);
+usersRoutes(app);
+userSessionsRoutes(app);
 
-// Run the server!
+// Run the app!
 const start = async () => {
   try {
-    await server.listen(CONFIG.PORT, "0.0.0.0");
+    await app.listen(CONFIG.PORT, "0.0.0.0");
   } catch (err) {
-    server.log.error(err);
+    app.log.error(err);
     process.exit(1);
   }
 };

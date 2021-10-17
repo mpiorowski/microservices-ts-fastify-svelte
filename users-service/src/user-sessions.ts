@@ -6,6 +6,24 @@ import { helperPasswordCompare } from "./helpers/passwordCompareSync";
 export default function userSessionsRoutes(server: FastifyInstance): void {
   const userSessionExpireInHours = process.env["USER_SESSION_EXPIRE_IN_HOURS"];
 
+  server.get(
+    "/sessions/:sessionId",
+    async (request: FastifyRequest, _reply: FastifyReply) => {
+      const params = request.params as { sessionId: string };
+      const prisma = new PrismaClient();
+      const userSession = await prisma.userSession.findUnique({
+        where: { id: params.sessionId },
+      });
+
+      if (!userSession) {
+        throw Error("User session not found");
+      }
+
+      await prisma.$disconnect();
+      return userSession;
+    }
+  );
+  
   server.post(
     "/sessions",
     {
@@ -42,24 +60,6 @@ export default function userSessionsRoutes(server: FastifyInstance): void {
             .toISOString(),
         },
       });
-
-      await prisma.$disconnect();
-      return userSession;
-    }
-  );
-
-  server.get(
-    "/sessions/:sessionId",
-    async (request: FastifyRequest, _reply: FastifyReply) => {
-      const params = request.params as { sessionId: string };
-      const prisma = new PrismaClient();
-      const userSession = await prisma.userSession.findUnique({
-        where: { id: params.sessionId },
-      });
-
-      if (!userSession) {
-        throw Error("User session not found");
-      }
 
       await prisma.$disconnect();
       return userSession;

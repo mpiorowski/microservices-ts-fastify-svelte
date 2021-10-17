@@ -4,12 +4,15 @@ import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 
 export default function usersRoutes(server: FastifyInstance): void {
   server.get(
-    "/users",
-    async (_request: FastifyRequest, _reply: FastifyReply) => {
+    "/users/:userId",
+    async (request: FastifyRequest, _reply: FastifyReply) => {
+      const params = request.params as { userId: string };
       const prisma = new PrismaClient();
-      const allUsers = await prisma.user.findMany();
+      const user = await prisma.user.findUnique({
+        where: { id: params.userId },
+      });
       await prisma.$disconnect();
-      return allUsers;
+      return user;
     }
   );
 
