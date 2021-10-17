@@ -1,0 +1,28 @@
+POST http://172.28.222.140:3002/sessions
+content-type: application/json
+
+{
+    "email": "mat@wp.pl",
+    "password": "pass"
+}
+
+####
+
+POST http://172.28.222.140:3002/users
+content-type: application/json
+
+{
+    "email": "ma222t@wp.pl",
+    "password": "pass"
+}
+
+
+####
+
+DELETE http://172.28.222.140:3002/sessions/ckuvf4z4300221ls5stx2a57n
+content-type: application/json
+
+####
+
+GET http://172.28.222.140:3002/sessions/ckuvfgzv900034ss5pjw6n04m
+content-type: application/json

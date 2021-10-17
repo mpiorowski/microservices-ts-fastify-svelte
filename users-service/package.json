@@ -3,11 +3,24 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "watch": "ts-node-dev --respawn index.dev.ts"
+    "watch": "DATABASE_HOST=users-service-db:5432 nodemon src/server.ts",
+    "migrate": "DATABASE_HOST=localhost:5434 prisma migrate"
   },
   "dependencies": {
-    "module-alias": "^2.2.2",
-    "ts-node-dev": "^1.1.8",
-    "typescript": "^4.4.3"
+    "@prisma/client": "3.2.1",
+    "@types/bcryptjs": "^2.4.2",
+    "@types/node": "^16.11.1",
+    "bcryptjs": "^2.4.3",
+    "dayjs": "^1.10.7",
+    "dotenv": "^10.0.0",
+    "fastify": "^3.22.0",
+    "fastify-cors": "^6.0.2",
+    "nodemon": "^2.0.13",
+    "pg": "^8.7.1",
+    "reflect-metadata": "^0.1.13",
+    "typescript": "^4.4.4"
+  },
+  "devDependencies": {
+    "prisma": "3.2.1"
   }
 }

@@ -1,36 +1,38 @@
 version: "3"
 services:
-
   api-gateway:
-    build: 
+    container_name: api-gateway
+    build:
       context: "."
       dockerfile: "./api-gateway/Dockerfile"
     depends_on:
       - chat-service
       - users-service
-    ports: 
+    ports:
       - "7000:7000"
     volumes:
       - ./api-gateway:/opt/app
 
   chat-service:
-    build: 
+    container_name: chat-service
+    build:
       context: "."
       dockerfile: "./chat-service/Dockerfile"
     depends_on:
       - chat-service-db
-    ports: 
-      - "7001:7000"
+    ports:
+      - "3001:3000"
     volumes:
       - ./chat-service:/opt/app
-    command: sh -c "yarn && yarn watch"
+    command: sh -c "yarn watch"
 
-  chat-service-db: 
+  chat-service-db:
+    container_name: chat-service-db
     image: postgres
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: 12345
-      POSTGRES_DB: chat-service
+      POSTGRES_DB: chat-service-db
       PGDATA: /data/pgdata
     volumes:
       - ./db/chat-service:/data/pgdata
@@ -38,24 +40,25 @@ services:
       - "5433:5432"
 
   users-service:
-    build: 
+    container_name: users-service
+    build:
       context: "."
       dockerfile: "./users-service/Dockerfile"
     depends_on:
       - users-service-db
-    ports: 
-      - 7002:7000
+    ports:
+      - "3002:3000"
     volumes:
       - ./users-service:/opt/app
-    command: sh -c "yarn && yarn watch"
-    
+    command: sh -c "yarn watch"
 
-  users-service-db: 
+  users-service-db:
+    container_name: users-service-db
     image: postgres
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: 12345
-      POSTGRES_DB: users-service
+      POSTGRES_DB: users-service-db
       PGDATA: /data/pgdata
     volumes:
       - ./db/users-service:/data/pgdata
