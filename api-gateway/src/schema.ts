@@ -5,6 +5,20 @@ export const schema = `
     userSession: UserSession
   }
 
+  type Mutation {
+
+    createUserSession(
+      email: String!
+      password: String!
+    ): UserSession
+
+    createUser(
+      email: String!
+      password: String!
+    ): UserSession
+    
+  }
+
   type User {
     id: ID!
     email: String!

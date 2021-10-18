@@ -6,7 +6,6 @@ import { UserSession } from "./@types/Users";
 import { loaders } from "./loaders";
 import { resolvers } from "./resolvers";
 import { schema } from "./schema";
-import { getSession } from "./sessions/api";
 
 console.log("api gateway says hi");
 require("dotenv").config();
@@ -28,24 +27,31 @@ app.register(cookie, {
   parseOptions: {}, // options for parsing cookies
 } as FastifyCookieOptions);
 
-app.addHook(
-  "onRequest",
-  async (request: FastifyRequest, reply: FastifyReply) => {
-    console.dir("onRequest");
-    try {
-      if ("sessionId" in request.cookies && request.cookies["sessionId"]) {
-        const userSession = await getSession(request.cookies["sessionId"]);
-        if (userSession.id) {
-          return (request.userSession = userSession);
-        }
-      }
-      throw Error();
-    } catch (error: unknown) {
-      app.log.error(error);
-      return reply.status(401).send({ message: "Not logged in" });
-    }
-  }
-);
+// authorization
+// app.addHook(
+//   "onRequest",
+//   async (request: FastifyRequest, reply: FastifyReply) => {
+//     console.dir("onRequest");
+//     console.dir(request.routerPath);
+//     if (!request.routerPath.includes("/graphiql")) {
+//       try {
+//         if ("sessionId" in request.cookies && request.cookies["sessionId"]) {
+//           const userSession = await getSession(request.cookies["sessionId"]);
+//           if (!userSession.id) {
+//             throw Error();
+//           }
+//           request.userSession = userSession;
+//         } else {
+//           throw Error();
+//         }
+//       } catch (error: unknown) {
+//         console.dir("Unauthorized");
+//         app.log.error(error);
+//         reply.status(401).send({ message: "Unauthorized" });
+//       }
+//     }
+//   }
+// );
 
 // error handler
 app.setErrorHandler(function (
@@ -57,46 +63,33 @@ app.setErrorHandler(function (
   reply.send("Something went wrong");
 });
 
+export type Context = {
+  request: FastifyRequest;
+  reply: FastifyReply;
+  userSession: UserSession;
+};
+
 app.register(mercurius, {
   schema,
   resolvers,
   loaders,
   graphiql: true,
-  context: (request: FastifyRequest, _reply: FastifyReply) => {
-    // Return an object that will be available in your GraphQL resolvers
+  context: (request: FastifyRequest, reply: FastifyReply) => {
     return {
+      request: request,
+      reply: reply,
       userSession: request.userSession,
     };
   },
 });
 
-// function fastifyAppClosePlugin(app: FastifyInstance) {
-//   return {
-//     async serverWillStart() {
-//       return {
-//         async drainServer() {
-//           await app.close();
-//         },
-//       };
-//     },
-//   };
-// }
-
-// // apollo server
-// const apolloServer = new ApolloServer({
-//   typeDefs: schema,
-//   resolvers,
-//   plugins: [
-//     fastifyAppClosePlugin(app),
-//     ApolloServerPluginDrainHttpServer({ httpServer: app.server }),
-//   ],
-// });
+app.get("/", (_request: FastifyRequest, reply: FastifyReply) => {
+  reply.send({ hello: "world" });
+});
 
 // Run the server!
 const start = async () => {
   try {
-    // await apolloServer.start();
-    // app.register(apolloServer.createHandler());
     await app.listen(CONFIG.PORT, "0.0.0.0");
   } catch (err) {
     app.log.error(err);

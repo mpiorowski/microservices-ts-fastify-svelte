@@ -23,7 +23,7 @@ app.register(require("fastify-cors"), {
 // );
 
 // error handler
-app.setErrorHandler(function (
+app.setErrorHandler(async function (
   error: unknown,
   _request: FastifyRequest,
   reply: FastifyReply
