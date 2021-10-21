@@ -15,15 +15,19 @@ export default function userSessionsRoutes(server: FastifyInstance): void {
         where: { id: params.sessionId },
       });
 
-      if (!userSession) {
+      if (!userSession?.expiredAt) {
         throw Error("User session not found");
+      }
+
+      if (userSession?.expiredAt < new Date()) {
+        throw Error("User session expired");
       }
 
       await prisma.$disconnect();
       return userSession;
     }
   );
-  
+
   server.post(
     "/sessions",
     {

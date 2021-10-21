@@ -6,7 +6,7 @@ export const resolvers = {
     userSession: async (
       _obj: any,
       _args: any,
-      ctx: { userSession: { id: string } }
+      ctx: Context
     ) => ctx.userSession,
   },
   Mutation: {
@@ -19,7 +19,7 @@ export const resolvers = {
     createUser: async (
       _obj: any,
       args: { email: string; password: string },
-      _ctx: { userSession: { id: string } }
-    ) => createUser(args),
+      ctx: Context
+    ) => createUser(args, ctx),
   },
 };

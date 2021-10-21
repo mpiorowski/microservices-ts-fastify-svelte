@@ -15,7 +15,7 @@ export const schema = `
     createUser(
       email: String!
       password: String!
-    ): UserSession
+    ): User
     
   }
 

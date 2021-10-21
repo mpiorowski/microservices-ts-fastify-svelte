@@ -1,8 +1,9 @@
 import got from "got/dist/source";
 import { User, UserSession } from "../@types/Users";
+import { authorization } from "../helpers";
 import { CONFIG, Context } from "../server";
 
-export const getUser: (userId: string) => Promise<User> = async (
+export const getUserLoader: (userId: string) => Promise<User> = async (
   userId: string
 ) => {
   const user = await got
@@ -11,13 +12,17 @@ export const getUser: (userId: string) => Promise<User> = async (
   return user;
 };
 
-export const createUser = async ({
-  email,
-  password,
-}: {
-  email: string;
-  password: string;
-}) => {
+export const createUser = async (
+  {
+    email,
+    password,
+  }: {
+    email: string;
+    password: string;
+  },
+  ctx: Context
+) => {
+  await authorization(ctx);
   const newUser = await got
     .post(`${CONFIG.USERS_SERVICE_URI}/users`, {
       json: { email, password },
