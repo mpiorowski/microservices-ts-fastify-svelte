@@ -17,6 +17,7 @@
     "fastify-cors": "^6.0.2",
     "nodemon": "^2.0.13",
     "pg": "^8.7.1",
+    "ts-node": "^10.4.0",
     "typescript": "^4.4.4"
   },
   "devDependencies": {
