@@ -2,6 +2,7 @@ export const schema = `
   scalar Date
 
   type Query {
+    logout: ID
     userSession: UserSession
   }
 

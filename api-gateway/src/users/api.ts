@@ -3,6 +3,18 @@ import { User, UserSession } from "../@types/Users";
 import { authorization } from "../helpers";
 import { CONFIG, Context } from "../server";
 
+export const getUserSessionFromContext = async (ctx: Context) => {
+  const response = await authorization(ctx);
+  return response;
+};
+
+export const getSession = async (sessionId: string) => {
+  const session = await got
+    .get(`${CONFIG.USERS_SERVICE_URI}/sessions/${sessionId}`)
+    .json<UserSession>();
+  return session;
+};
+
 export const getUserLoader: (userId: string) => Promise<User> = async (
   userId: string
 ) => {
@@ -31,13 +43,6 @@ export const createUser = async (
   return newUser;
 };
 
-export const getSession = async (sessionId: string) => {
-  const session = await got
-    .get(`${CONFIG.USERS_SERVICE_URI}/sessions/${sessionId}`)
-    .json<UserSession>();
-  return session;
-};
-
 export const createSession = async (
   {
     email,
@@ -54,7 +59,7 @@ export const createSession = async (
     })
     .json<UserSession>();
   ctx.reply.setCookie("sessionId", newSession.id, {
-    domain: 'http://localhost:5000',
+    // domain: 'http://localhost:5000',
     path: "/",
     secure: process.env["NODE_ENV"] === "production" ? true : false, // send cookie over HTTPS only
     httpOnly: true,
