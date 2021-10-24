@@ -3,11 +3,12 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "watch": "nodemon src/server.ts"
+    "watch": "dotenv -e .env.local nodemon src/server.ts"
   },
   "dependencies": {
     "@types/node": "^16.11.1",
     "dotenv": "^10.0.0",
+    "dotenv-cli": "^4.0.0",
     "fastify": "^3.22.0",
     "fastify-cookie": "^5.3.1",
     "fastify-cors": "^6.0.2",

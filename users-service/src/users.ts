@@ -32,7 +32,6 @@ export default function usersRoutes(server: FastifyInstance): void {
     },
     async (request: FastifyRequest, reply: FastifyReply) => {
       const body = request.body as {
-        username: string;
         email: string;
         password: string;
       };

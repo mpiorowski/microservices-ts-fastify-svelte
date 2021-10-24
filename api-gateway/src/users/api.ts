@@ -53,6 +53,13 @@ export const createSession = async (
       json: { email, password },
     })
     .json<UserSession>();
-  ctx.reply.setCookie("sessionId", newSession.id);
+  ctx.reply.setCookie("sessionId", newSession.id, {
+    domain: 'http://localhost:5000',
+    path: "/",
+    secure: process.env["NODE_ENV"] === "production" ? true : false, // send cookie over HTTPS only
+    httpOnly: true,
+    sameSite: true,
+    expires: new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000),
+  });
   return newSession;
 };

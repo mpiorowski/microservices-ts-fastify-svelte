@@ -1,11 +1,7 @@
 <script lang="ts">
   import * as yup from "yup";
   import { useLogIn } from "./login.graphql";
-
-  type User = {
-    emal: string;
-    password: string;
-  };
+  import type { User } from "./login.types";
 
   let schema: yup.SchemaOf<User> = yup
     .object()
@@ -28,6 +24,26 @@
   }
 
   const logIn = useLogIn();
+  const handleSubmit = async () => {
+    try {
+      firstSubmit = true;
+      const valid = await checkValidation();
+      console.log(valid);
+      if (valid) {
+        console.log("tutaj");
+        const response = await $logIn.mutateAsync({
+          email: user.email,
+          password: user.password,
+        });
+        console.log(response);
+        if (response) {
+          login();
+        }
+      }
+    } catch (error) {
+      console.dir(error);
+    }
+  };
 
   const checkValidation = async () => {
     try {
@@ -42,12 +58,6 @@
       errors = error;
       return false;
     }
-  };
-
-  const handleSubmit = async () => {
-    firstSubmit = true;
-    const valid = await checkValidation();
-    if (valid) login();
   };
 </script>
 

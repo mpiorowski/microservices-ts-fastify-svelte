@@ -26,6 +26,9 @@ app.register(cookie, {
   secret: "my-secret", // for cookies signature
   parseOptions: {}, // options for parsing cookies
 } as FastifyCookieOptions);
+app.register(require("fastify-cors"), {
+  // put your options here
+});
 
 // authorization
 // app.addHook(

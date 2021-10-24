@@ -4,18 +4,19 @@ import { gql, request } from "graphql-request";
 type LogIn = { email: string; password: string };
 
 export const useLogIn = () => {
-  return useMutation<void, Error, LogIn>(async (values: LogIn) => {
-    await request(
-      "localhost:7000/graphql",
+  return useMutation<{ id: string }, Error, LogIn>(async (user) => {
+    const response = await request<{ createUserSession: { id: string } }>(
+      "http://localhost:7000/graphql",
       gql`
-        mutation ($email: string!, $password: string!) {
+        mutation ($email: String!, $password: String!) {
           createUserSession(email: $email, password: $password) {
             id
           }
         }
       `,
-      { ...values }
+      { ...user }
     );
+    return response.createUserSession;
   });
 };
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { QueryClient, QueryClientProvider } from "@sveltestack/svelte-query";
+  import { QueryClient,QueryClientProvider } from "@sveltestack/svelte-query";
   import LoginPage from "./pages/login/LoginPage.svelte";
   import WelcomePage from "./pages/welcome/WelcomePage.svelte";
 

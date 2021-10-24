@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "watch": "DATABASE_HOST=users-service-db:5432 nodemon src/server.ts",
-    "migrate": "DATABASE_HOST=localhost:5434 prisma migrate"
+    "watch": "dotenv -e .env.local nodemon src/server.ts",
+    "migrate": "dotenv -e .env.migrate prisma migrate"
   },
   "dependencies": {
     "@prisma/client": "3.2.1",
@@ -13,6 +13,7 @@
     "bcryptjs": "^2.4.3",
     "dayjs": "^1.10.7",
     "dotenv": "^10.0.0",
+    "dotenv-cli": "^4.0.0",
     "fastify": "^3.22.0",
     "fastify-cors": "^6.0.2",
     "nodemon": "^2.0.13",
@@ -22,5 +23,8 @@
   },
   "devDependencies": {
     "prisma": "3.2.1"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   }
 }
