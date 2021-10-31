@@ -1,5 +1,47 @@
-import { useMutation } from '@sveltestack/svelte-query';
-import { gql, request } from 'graphql-request';
+import { useMutation, useQuery } from '@sveltestack/svelte-query';
+import request, { gql } from 'graphql-request';
+
+export function useAuth() {
+	return useQuery('auth', async () => {
+		const data = await request<{ userSession: { id: string } }>(
+			'/graphql',
+			gql`
+				query {
+					userSession {
+						id
+					}
+				}
+			`
+		);
+		return data.userSession;
+	});
+}
+
+export async function auth() {
+	const data = await request<{ userSession: { id: string } }>(
+		'/graphql',
+		gql`
+			query {
+				userSession {
+					id
+				}
+			}
+		`
+	);
+	return data.userSession;
+}
+
+export async function logout() {
+	const data = await request<{ userSession: { id: string } }>(
+		'/graphql',
+		gql`
+			query {
+				logout
+			}
+		`
+	);
+	return data.userSession;
+}
 
 type LogIn = { email: string; password: string };
 

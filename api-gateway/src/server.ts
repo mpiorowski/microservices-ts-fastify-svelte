@@ -30,32 +30,6 @@ app.register(require("fastify-cors"), {
   // put your options here
 });
 
-// authorization
-// app.addHook(
-//   "onRequest",
-//   async (request: FastifyRequest, reply: FastifyReply) => {
-//     console.dir("onRequest");
-//     console.dir(request.routerPath);
-//     if (!request.routerPath.includes("/graphiql")) {
-//       try {
-//         if ("sessionId" in request.cookies && request.cookies["sessionId"]) {
-//           const userSession = await getSession(request.cookies["sessionId"]);
-//           if (!userSession.id) {
-//             throw Error();
-//           }
-//           request.userSession = userSession;
-//         } else {
-//           throw Error();
-//         }
-//       } catch (error: unknown) {
-//         console.dir("Unauthorized");
-//         app.log.error(error);
-//         reply.status(401).send({ message: "Unauthorized" });
-//       }
-//     }
-//   }
-// );
-
 // error handler
 app.setErrorHandler(function (
   error: unknown,
@@ -63,7 +37,7 @@ app.setErrorHandler(function (
   reply: FastifyReply
 ) {
   app.log.error(error);
-  reply.send("Something went wrong");
+  reply.status(400).send("Something went wrong");
 });
 
 export type Context = {

@@ -24,14 +24,14 @@ app.register(require("fastify-cors"), {
 
 // error handler
 app.setErrorHandler(async function (
-  error: unknown,
+  error: { message: string },
   _request: FastifyRequest,
   reply: FastifyReply
 ) {
   // Log error
   app.log.error(error);
   // Send error response
-  reply.status(409).send(error);
+  await reply.status(409).send(error.message);
 });
 
 // Declare routes

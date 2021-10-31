@@ -1,5 +1,5 @@
 import { User, UserSession } from "./@types/Users";
-import { getUserLoader } from "./users/api";
+import { getUserLoader } from "./api";
 
 export const loaders = {
   UserSession: {

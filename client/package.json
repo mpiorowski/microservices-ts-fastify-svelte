@@ -28,8 +28,10 @@
   "type": "module",
   "dependencies": {
     "@sveltestack/svelte-query": "^1.4.1",
+    "@types/uuid": "^8.3.1",
     "graphql": "^15.6.1",
     "graphql-request": "^3.6.1",
+    "uuid": "^8.3.2",
     "yup": "^0.32.11"
   }
 }

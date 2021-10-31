@@ -1,7 +1,8 @@
 <script lang="ts">
 	import * as yup from 'yup';
-	import { useLogIn } from './_helpers/login.graphql';
-	import type { User } from './_helpers/login.types';
+	import { toast, ToastType } from '../_components/notifications';
+	import { useLogIn } from './auth.graphql';
+	import type { User } from './auth.types';
 
 	let schema: yup.SchemaOf<User> = yup
 		.object()
@@ -16,32 +17,10 @@
 	let firstSubmit = false;
 
 	export let login: () => void;
+
 	$: {
 		checkValidation(), user;
 	}
-
-	const logIn = useLogIn();
-	const handleSubmit = async () => {
-		try {
-			firstSubmit = true;
-			const valid = await checkValidation();
-			console.log(valid);
-			if (valid) {
-				console.log('tutaj');
-				const response = await $logIn.mutateAsync({
-					email: user.email,
-					password: user.password
-				});
-				console.log(response);
-				if (response) {
-					login();
-				}
-			}
-		} catch (error) {
-			console.dir(error);
-		}
-	};
-
 	const checkValidation = async () => {
 		try {
 			if (firstSubmit) {
@@ -54,6 +33,26 @@
 			console.dir(error);
 			errors = error;
 			return false;
+		}
+	};
+
+	const logIn = useLogIn();
+	const handleSubmit = async () => {
+		try {
+			firstSubmit = true;
+			const valid = await checkValidation();
+			if (valid) {
+				const response = await $logIn.mutateAsync({
+					email: user.email,
+					password: user.password
+				});
+				if (response) {
+					login();
+				}
+			}
+		} catch (error) {
+			console.dir(error);
+			toast(error.response.errors[0].message, ToastType.ERROR, 2000);
 		}
 	};
 </script>

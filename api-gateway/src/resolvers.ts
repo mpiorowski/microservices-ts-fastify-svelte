@@ -1,16 +1,12 @@
-import { logout } from "./helpers";
+import { createSession, createUser } from "./api";
+import { authorization, logout } from "./helpers";
 import { Context } from "./server";
-import {
-  createSession,
-  createUser,
-  getUserSessionFromContext,
-} from "./users/api";
 
 export const resolvers = {
   Query: {
     logout: async (_obj: any, _args: any, ctx: Context) => logout(ctx),
     userSession: async (_obj: any, _args: any, ctx: Context) =>
-      getUserSessionFromContext(ctx),
+      await authorization(ctx),
   },
   Mutation: {
     createUserSession: async (

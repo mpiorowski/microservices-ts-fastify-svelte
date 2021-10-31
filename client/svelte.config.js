@@ -11,6 +11,9 @@ const config = {
 		// hydrate the <div id="svelte"> element in src/app.html
 		target: '#svelte',
 		ssr: false,
+		files: {
+			routes: 'src/pages',
+		},
 		vite: {
 			server: {
 				proxy: {
