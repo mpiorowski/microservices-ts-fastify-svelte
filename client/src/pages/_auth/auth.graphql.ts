@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from '@sveltestack/svelte-query';
 import request, { gql } from 'graphql-request';
+import type { User } from './auth.types';
 
 export function useAuth() {
 	return useQuery('auth', async () => {
@@ -18,12 +19,16 @@ export function useAuth() {
 }
 
 export async function auth() {
-	const data = await request<{ userSession: { id: string } }>(
+	const data = await request<{ userSession: { id: string; user: { id: string; email: string } } }>(
 		'/graphql',
 		gql`
 			query {
 				userSession {
 					id
+					user {
+						email
+						id
+					}
 				}
 			}
 		`
@@ -46,13 +51,17 @@ export async function logout() {
 type LogIn = { email: string; password: string };
 
 export const useLogIn = () => {
-	return useMutation<{ id: string }, Error, LogIn>(async (user) => {
-		const response = await request<{ createUserSession: { id: string } }>(
+	return useMutation(async (user: LogIn) => {
+		const response = await request<{ createUserSession: { id: string; user: User } }>(
 			'/graphql',
 			gql`
 				mutation ($email: String!, $password: String!) {
 					createUserSession(email: $email, password: $password) {
 						id
+						user {
+							id
+							email
+						}
 					}
 				}
 			`,

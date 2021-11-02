@@ -2,6 +2,7 @@
 	import * as yup from 'yup';
 	import { toast, ToastType } from '../_components/notifications';
 	import { useLogIn } from './auth.graphql';
+import { userStore } from './auth.store';
 	import type { User } from './auth.types';
 
 	let schema: yup.SchemaOf<User> = yup
@@ -47,6 +48,7 @@
 					password: user.password
 				});
 				if (response) {
+					userStore.set({ id: response.user.id, email: response.user.email });
 					login();
 				}
 			}

@@ -34,7 +34,8 @@ label {
 input,
 button,
 select,
-textarea {
+textarea,
+.button {
 	font-family: inherit;
 	font-size: inherit;
 	-webkit-padding: 0.4em 0;
@@ -49,7 +50,8 @@ input:disabled {
 	color: #ccc;
 }
 
-button {
+button,
+.button {
 	color: #333;
 	background-color: #f4f4f4;
 	outline: none;

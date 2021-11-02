@@ -21,3 +21,5 @@ export const toast = (message: string, type: ToastType, timeout: number): void =
 		});
 	}, timeout);
 };
+
+export const toastSave = () => toast('Zapisano', ToastType.SUCCESS, 3000);

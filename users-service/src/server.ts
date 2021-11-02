@@ -1,8 +1,8 @@
 console.log("users service says hi");
 
 import { FastifyReply, FastifyRequest } from "fastify";
-import userSessionsRoutes from "./user-sessions";
-import usersRoutes from "./users";
+import userSessionsRoutes from "./routes/user-sessions";
+import usersRoutes from "./routes/users";
 
 require("dotenv").config();
 export const CONFIG = {
@@ -14,13 +14,6 @@ const app = require("fastify")({ logger: true });
 app.register(require("fastify-cors"), {
   credentials: true,
 });
-
-// app.addHook(
-//   "onSend",
-//   function (_req: FastifyRequest, _reply: FastifyReply, payload: any) {
-//     app.log.info({ body: payload }, "parsed body");
-//   }
-// );
 
 // error handler
 app.setErrorHandler(async function (

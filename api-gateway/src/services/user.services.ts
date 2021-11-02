@@ -1,8 +1,8 @@
 import got from "got/dist/source";
 import mercurius from "mercurius";
-import { User, UserSession } from "./@types/Users";
-import { authorization } from "./helpers";
-import { CONFIG, Context } from "./server";
+import { User, UserSession } from "../@types/Users";
+import { authorization } from "../helpers";
+import { CONFIG, Context } from "../server";
 const { ErrorWithProps } = mercurius;
 
 export const getSession = async (sessionId: string) => {

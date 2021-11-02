@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import dayjs from "dayjs";
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
-import { helperPasswordCompare } from "./helpers/passwordCompareSync";
+import { helperPasswordCompare } from "../helpers/passwordCompareSync";
 
 export default function userSessionsRoutes(server: FastifyInstance): void {
   const userSessionExpireInHours = process.env["USER_SESSION_EXPIRE_IN_HOURS"];

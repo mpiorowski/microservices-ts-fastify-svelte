@@ -1,5 +1,5 @@
 import { Context } from "./server";
-import { getSession } from "./api";
+import { getSession } from "./services/user.services";
 
 export const authorization = async (ctx: Context) => {
   if (

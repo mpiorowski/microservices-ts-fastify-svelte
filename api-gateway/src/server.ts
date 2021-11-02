@@ -12,6 +12,7 @@ require("dotenv").config();
 export const CONFIG = {
   PORT: process.env["PORT"],
   USERS_SERVICE_URI: process.env["USERS_SERVICE_URI"] as string,
+  CHAT_SERVICE_URI: process.env["CHAT_SERVICE_URI"] as string,
 };
 
 declare module "fastify" {

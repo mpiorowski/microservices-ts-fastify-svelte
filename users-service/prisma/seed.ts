@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 async function main() {
   await prisma.user.create({
     data: {
-      email: "mateuszpiorowski@gmail.com",
+      email: "user@gmail.com",
       password: bcryptjs.hashSync("pass"),
     },
   });

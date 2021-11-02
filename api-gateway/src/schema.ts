@@ -4,6 +4,7 @@ export const schema = `
   type Query {
     logout: ID
     userSession: UserSession
+    chat(userId: ID!): [Chat]
   }
 
   type Mutation {
@@ -17,6 +18,11 @@ export const schema = `
       email: String!
       password: String!
     ): User
+
+    createChat(
+      message: String!
+      userId: ID!
+    ): Chat
     
   }
 
@@ -32,5 +38,14 @@ export const schema = `
     id: ID!
     userId: String!
     user: User
+  }
+
+  type Chat {
+    id: ID!
+    message: String!
+    userId: String!
+    user: User!
+    createdAt: Date!
+    updatedAt: Date!
   }
 `;
