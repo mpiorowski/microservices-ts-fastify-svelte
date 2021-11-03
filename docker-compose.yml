@@ -6,61 +6,61 @@ services:
       context: "."
       dockerfile: "./api-gateway/Dockerfile"
     depends_on:
-      - chat-service
-      - users-service
+      - service-chat
+      - service-users
     ports:
       - "7000:7000"
     volumes:
       - ./api-gateway:/opt/app
 
-  chat-service:
-    container_name: chat-service
+  service-chat:
+    container_name: service-chat
     build:
       context: "."
-      dockerfile: "./chat-service/Dockerfile"
+      dockerfile: "./service-chat/Dockerfile"
     depends_on:
-      - chat-service-db
+      - service-chat-db
     ports:
       - "3001:3000"
     volumes:
-      - ./chat-service:/opt/app
+      - ./service-chat:/opt/app
     command: sh -c "yarn watch"
 
-  chat-service-db:
-    container_name: chat-service-db
+  service-chat-db:
+    container_name: service-chat-db
     image: postgres
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: 12345
-      POSTGRES_DB: chat-service-db
+      POSTGRES_DB: service-chat-db
       PGDATA: /data/pgdata
     volumes:
-      - ./db/chat-service:/data/pgdata
+      - ./db/service-chat:/data/pgdata
     ports:
       - "5433:5432"
 
-  users-service:
-    container_name: users-service
+  service-users:
+    container_name: service-users
     build:
       context: "."
-      dockerfile: "./users-service/Dockerfile"
+      dockerfile: "./service-users/Dockerfile"
     depends_on:
-      - users-service-db
+      - service-users-db
     ports:
       - "3002:3000"
     volumes:
-      - ./users-service:/opt/app
+      - ./service-users:/opt/app
     command: sh -c "yarn watch"
 
-  users-service-db:
-    container_name: users-service-db
+  service-users-db:
+    container_name: service-users-db
     image: postgres
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: 12345
-      POSTGRES_DB: users-service-db
+      POSTGRES_DB: service-users-db
       PGDATA: /data/pgdata
     volumes:
-      - ./db/users-service:/data/pgdata
+      - ./db/service-users:/data/pgdata
     ports:
       - "5434:5432"
