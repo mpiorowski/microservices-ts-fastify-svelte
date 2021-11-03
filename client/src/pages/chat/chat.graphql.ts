@@ -14,6 +14,7 @@ export function useFindAllChat(userId: string) {
 							email
 						}
 						message
+						createdAt
 					}
 				}
 			`

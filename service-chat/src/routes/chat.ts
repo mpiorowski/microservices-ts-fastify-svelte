@@ -2,18 +2,16 @@ import { PrismaClient } from "@prisma/client";
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 
 export default function chatRoutes(server: FastifyInstance): void {
-  server.get(
-    "/chat",
-    async (request: FastifyRequest, _reply: FastifyReply) => {
-      const query = request.query as { userId: string };
-      const prisma = new PrismaClient();
-      const chat = await prisma.chat.findMany({
-        where: { userId: query.userId },
-      });
-      await prisma.$disconnect();
-      return chat;
-    }
-  );
+  server.get("/chat", async (request: FastifyRequest, _reply: FastifyReply) => {
+    const query = request.query as { userId: string };
+    const prisma = new PrismaClient();
+    const chat = await prisma.chat.findMany({
+      where: { userId: query.userId },
+      orderBy: { createdAt: "desc" },
+    });
+    await prisma.$disconnect();
+    return chat;
+  });
 
   server.get(
     "/chat/:chatId",

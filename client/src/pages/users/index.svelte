@@ -36,7 +36,7 @@
 	<input id="password" bind:value={user.password} />
 </div>
 <div>
-	<button on:click={handleSubmit}>Dodaj</button>
+	<button on:click={handleSubmit}>Add user</button>
 </div>
 
 <div>

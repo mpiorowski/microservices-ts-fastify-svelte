@@ -1,5 +1,8 @@
 import { User, UserSession } from "./@types/Users";
-import { getUserLoader } from "./services/user.services";
+import {
+  findAllUsersLoader,
+  getUserLoader
+} from "./services/user.services";
 
 export type Chat = {
   id: string;
@@ -23,12 +26,21 @@ export const loaders = {
   },
   Chat: {
     async user(queries: { obj: Chat }[]): Promise<User[]> {
-      let users: Promise<User>[] = [];
-      queries.forEach(({ obj }: { obj: Chat }) => {
-        const user = getUserLoader(obj.userId);
-        users.push(user);
-      });
-      return Promise.all(users);
+      // let users: Promise<User>[] = [];
+      // queries.forEach(({ obj }: { obj: Chat }) => {
+      //   const user = getUserLoader(obj.userId);
+      //   users.push(user);
+      // });
+
+      const userIds = queries.flatMap(
+        ({ obj }: { obj: Chat }) => obj.userId || []
+      );
+      const users = await findAllUsersLoader();
+
+      const userByIds = userIds.flatMap((userId) =>
+        users.filter((user) => user.id === userId)
+      );
+      return userByIds;
     },
   },
 };

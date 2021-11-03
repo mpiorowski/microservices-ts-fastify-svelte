@@ -30,6 +30,7 @@ export const schema = `
   type User {
     id: ID!
     email: String!
+    password: String!
   }
 
   type UserSession {

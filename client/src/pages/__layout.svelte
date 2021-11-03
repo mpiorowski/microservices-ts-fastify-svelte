@@ -18,6 +18,9 @@
 				isAuth = true;
 				isLoading = false;
 				userStore.set({ id: response.user.id, email: response.user.email });
+			} else {
+				isAuth = false;
+				isLoading = false;
 			}
 		})
 		.catch((err) => {
@@ -32,11 +35,10 @@
 	{#if isLoading}
 		<Loading />
 	{/if}
-	{#if !isLoading}
-		{#if !isAuth}
-			<Login login={() => (isAuth = true)} />
-		{/if}
-
+	{#if !isLoading && !isAuth}
+		<Login login={() => (isAuth = true)} />
+	{/if}
+	{#if !isLoading && isAuth}
 		<div>
 			<a class="button" href="/">Home</a>
 			<a class="button" href="/users">Users</a>

@@ -12,9 +12,12 @@ const config = {
 		target: '#svelte',
 		ssr: false,
 		files: {
-			routes: 'src/pages',
+			routes: 'src/pages'
 		},
 		vite: {
+			optimizeDeps: {
+				include: ['broadcast-channel']
+			},
 			server: {
 				proxy: {
 					'/graphql': 'http://localhost:7000'

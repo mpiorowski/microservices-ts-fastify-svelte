@@ -1,6 +1,6 @@
 yarn
 yarn --cwd ./api-gateway
-yarn --cwd ./chat-service
-yarn --cwd ./users-service
+yarn --cwd ./service-chat
+yarn --cwd ./service-users
 
 docker-compose up

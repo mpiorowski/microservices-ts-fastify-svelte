@@ -14,10 +14,17 @@ export const getSession = async (sessionId: string) => {
 
 export const findAllUsers = async (ctx: Context) => {
   await authorization(ctx);
-  const session = await got
+  const users = await got
     .get(`${CONFIG.USERS_SERVICE_URI}/users`)
     .json<User[]>();
-  return session;
+  return users;
+};
+
+export const findAllUsersLoader = async () => {
+  const users = await got
+    .get(`${CONFIG.USERS_SERVICE_URI}/users`)
+    .json<User[]>();
+  return users;
 };
 
 export const getUserLoader: (userId: string) => Promise<User> = async (
