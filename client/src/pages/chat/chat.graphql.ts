@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@sveltestack/svelte-query';
 import request, { gql } from 'graphql-request';
-import type { Chat } from './chat.types';
+import type { Chat } from '../../../../@types/types';
 
 export function useFindAllChat(userId: string) {
 	return useQuery<Chat[], Error, Chat[]>(['chat', userId], async () => {

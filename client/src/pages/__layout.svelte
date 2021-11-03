@@ -39,6 +39,7 @@
 
 		<div>
 			<a class="button" href="/">Home</a>
+			<a class="button" href="/users">Users</a>
 			<a class="button" href="/chat">Chat</a>
 			<button on:click={handleLogout}>Log out</button>
 		</div>

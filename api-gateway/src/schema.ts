@@ -4,6 +4,7 @@ export const schema = `
   type Query {
     logout: ID
     userSession: UserSession
+    users: [User]
     chat(userId: ID!): [Chat]
   }
 

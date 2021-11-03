@@ -1,7 +1,11 @@
 import { authorization, logout } from "./helpers";
 import { Context } from "./server";
 import { createChat, findAllChat } from "./services/chat.services";
-import { createSession, createUser } from "./services/user.services";
+import {
+  createSession,
+  createUser,
+  findAllUsers
+} from "./services/user.services";
 
 export const resolvers = {
   Query: {
@@ -10,6 +14,7 @@ export const resolvers = {
       await authorization(ctx),
     chat: async (_obj: any, args: { userId: string }, ctx: Context) =>
       findAllChat(args, ctx),
+    users: async (_obj: any, _args: any, ctx: Context) => findAllUsers(ctx),
   },
   Mutation: {
     createUserSession: async (

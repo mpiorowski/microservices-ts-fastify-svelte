@@ -16,6 +16,16 @@ export default function usersRoutes(server: FastifyInstance): void {
     }
   );
 
+  server.get(
+    "/users",
+    async (_request: FastifyRequest, _reply: FastifyReply) => {
+      const prisma = new PrismaClient();
+      const user = await prisma.user.findMany();
+      await prisma.$disconnect();
+      return user;
+    }
+  );
+
   server.post(
     "/users",
     {
