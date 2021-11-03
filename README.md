@@ -28,5 +28,6 @@ sh start-front.sh
 ```
 
 Log in using default user:  
+access: `localhost:3000`  
 email: `user@gmail.com`  
 password: `pass`
