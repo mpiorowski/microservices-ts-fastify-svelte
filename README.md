@@ -23,6 +23,12 @@ sh start-migrate.sh
 ```
 
 ```
+# ONLY DURING FIRST LAUNCH
+# run databases seeding
+sh start-seed.sh
+```
+
+```
 # run frontend app
 sh start-front.sh
 ```
