@@ -4,7 +4,8 @@
   "license": "MIT",
   "scripts": {
     "watch": "dotenv -e .env.local nodemon src/server.ts",
-    "migrate": "dotenv -e .env.migrate prisma migrate"
+    "migrate": "dotenv -e .env.migrate prisma migrate",
+    "seed": "dotenv -e .env.migrate prisma db seed"
   },
   "dependencies": {
     "@prisma/client": "3.2.1",
