@@ -1,6 +1,6 @@
 # microservices-fastify-svelte
 
-## Simple microservice app written in typescript using:
+### Simple microservice app written in typescript using:
 
 - fastify
 - svelte
@@ -9,6 +9,11 @@
 - docker
 
 # Deploy
+
+Prerequisite:
+- node
+- docker-compose
+
 
 Run 3 command line, one after another:
 
