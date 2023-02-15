@@ -1,4 +1,4 @@
-# microservices-fastify-svelte
+# Svelte with fasitfy using graphQL microservices
 
 ### Simple microservice app written in typescript using:
 
@@ -7,6 +7,10 @@
 - graphql
 - prisma + postgres
 - docker
+
+Check my other similar projects:
+- [Rust with SvelteKit using gRPC](https://github.com/mpiorowski/rust-grpc)
+- [Go with SvelteKit using gRPC](https://github.com/mpiorowski/go-svelte-grpc)
 
 # Deploy
 
