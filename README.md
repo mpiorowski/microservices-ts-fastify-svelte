@@ -9,7 +9,7 @@
 - docker
 
 Check my other similar projects:
-- [Rust with SvelteKit using gRPC](https://github.com/mpiorowski/rust-grpc)
+- [Rust with SvelteKit using gRPC](https://github.com/mpiorowski/rust-typescript-grpc)
 - [Go with SvelteKit using gRPC](https://github.com/mpiorowski/go-svelte-grpc)
 
 # Deploy
